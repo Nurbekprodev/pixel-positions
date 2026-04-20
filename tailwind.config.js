@@ -13,6 +13,7 @@ export default {
       },
       width: {
         42: '42px',
+        70: '70px',
         100: '100px',
       },
       fontSize: {

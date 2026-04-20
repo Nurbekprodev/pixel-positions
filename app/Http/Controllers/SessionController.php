@@ -30,4 +30,13 @@ class SessionController extends Controller
 
         return redirect('/');
     }
+
+    public function destroy(Request $request){
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerate();
+
+        return redirect('/');
+    }
 }

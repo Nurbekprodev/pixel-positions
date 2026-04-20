@@ -1,3 +1,3 @@
-@props(['width' => 100])
+@props(['employer','width' => 100])
 
-<img class=" w-{{$width}}  rounded-xl" src="{{ Vite::asset('resources/images/img1.png')}} " alt="img">
+<img {{ $attributes->merge(['class' => 'rounded-xl']) }} src="{{ Storage::url($employer->logo) }}"  alt="img">
