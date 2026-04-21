@@ -18,13 +18,42 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
+        $query = Job::with(['employer', 'tags'])->latest();
+
+        // search
+        if ($request->q) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->q . '%')
+                ->orWhere('location', 'like', '%' . $request->q . '%')
+                ->orWhereHas('employer', function ($q2) use ($request) {
+                    $q2->where('name', 'like', '%' . $request->q . '%');
+                });
+            });
+        }
+
+        // filter by schedule
+        if($request->chedule){
+            $query->where('schedule', $request->schedule);
+        }
+
+        // filter by tags
+        if($request->tag){
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('name', $request->tag);
+            });
+        }
+
+        // featured only
+        if($request->featured){
+            $query->where('featured', true);
+        }
+
+        $jobs = $query->paginate(10)->withQueryString();
 
         return view('jobs.index', [
-            'jobs' => $jobs[0],
-            'featuredJobs' => $jobs[1],
+            'jobs' => $jobs,
             'tags' => Tag::all(),
         ]);
     }
@@ -77,7 +106,6 @@ class JobController extends Controller
             return $job->employer->user->is($user);
         }); 
 
-        Gate::authorize('edit-job', $job);
 
         // validate
         $attributes = $request->validate([
@@ -107,6 +135,12 @@ class JobController extends Controller
 
         // redirect
         return redirect('/jobs/' . $job->id);
+    }
+
+    public function destroy(Job $job){
+        $job->delete();
+
+        return redirect('/');
     }
 }
 

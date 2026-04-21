@@ -19,8 +19,8 @@
             </div>
 
             <div class="space-x-6 font-bold">
-                <a href="#">Jobs</a>
-                <a href="#">Careers</a>
+                <a href="/">Home</a>
+                <a href="/jobs">Jobs</a>
                 <a href="#">Salaries</a>
                 <a href="#">Companies</a>
             </div>

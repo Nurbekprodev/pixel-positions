@@ -22,7 +22,13 @@
         <x-forms.input label="Tags (comma seperated)" name="tags" 
         value="{{ $job->tags->pluck('name')->implode(', ') }}" />
 
-        <x-forms.button>Edit Job</x-forms.button>
+        <div class="flex justify-between items-center">
+            <div class="font-bold hover:opacity-75">
+                <a href="/jobs/{{$job->id}}">Cancel</a>
+            </div>
+
+            <x-forms.button>Update</x-forms.button>
+        </div>
 
     </x-forms.form>
 </x-layout>

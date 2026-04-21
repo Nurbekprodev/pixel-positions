@@ -33,13 +33,38 @@
             </p>
         </div>
 
-        @can('edit-job', $job)
-            <div>
-                <a href="/jobs/{{ $job->id }}/edit"
-                class="bg-blue-500 p-2 rounded-sm hover:opacity-75"
-                >Edit Job</a>
+
+        <div class="flex justify-between items-center">
+            <div class="font-bold hover:opacity-75">
+                <a href="/jobs">Cancel</a>
             </div>
-        @endcan
+
+            <div class="flex gap-4 justify-end items-center">
+                @can('edit', $job)
+                    <div>
+                        <a href="/jobs/{{ $job->id }}/edit"
+                        class="bg-blue-800 rounded py-2 px-6 font-bold hover:opacity-75"
+                        >Edit Job</a>
+                    </div>
+                @endcan
+
+                @can('delete', $job)
+                    <div>
+                        <form method='POST' action="/jobs/{{$job->id}}">
+                            @csrf
+                            @method('DELETE')
+
+                            <div class="">
+                                <button onclick="return confirm('Are you sure you want to delete this job?')"
+                                    class="text-red-500 rounded font-bold hover:opacity-75">Delete Job
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                @endcan
+            </div>
+        </div>
     </div>
 
 
