@@ -1,5 +1,18 @@
 <x-layout>
     <div class="max-w-4xl mx-auto space-y-8">
+        <!-- Success message -->
+        @if (session('success'))
+            <div class="text-green-500">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="text-red-500">
+                {{ session('error') }}
+            </div>
+        @endif       
+
 
         {{-- Header --}}
         <div class="flex items-center justify-between">
@@ -61,6 +74,19 @@
                             </div>
 
                         </form>
+                    </div>
+                @endcan
+
+                @can('apply', $job)
+                    <div>
+                        <form action="/jobs/{{$job->id}}/applications" method="POST">
+                            @csrf
+
+                            <button onclick="return confirm('Are you sure you want to apply to this job?')"
+                                class="bg-blue-800 rounded py-2 px-6 font-bold hover:opacity-75">Apply
+                            </button>
+                        </form>
+                        
                     </div>
                 @endcan
             </div>

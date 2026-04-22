@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
@@ -34,6 +35,9 @@ Route::middleware('guest')->group(function (){
     Route::post('/login', [SessionController::class,'store']);
 });
 
+Route::post('/jobs/{job}/applications', [ApplicationController::class, 'store'])
+    ->middleware('auth')
+    ->can('apply', 'job');
 
 
 Route::delete('/logout', [SessionController::class, 'destroy']);
