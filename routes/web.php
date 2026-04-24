@@ -35,9 +35,14 @@ Route::middleware('guest')->group(function (){
     Route::post('/login', [SessionController::class,'store']);
 });
 
+
+Route::get('/applications', [ApplicationController::class, 'index'])->middleware('auth');
+
 Route::post('/jobs/{job}/applications', [ApplicationController::class, 'store'])
     ->middleware('auth')
     ->can('apply', 'job');
+
+Route::get('/jobs/{job}/applications', [ApplicationController::class, 'show']);
 
 
 Route::delete('/logout', [SessionController::class, 'destroy']);

@@ -21,7 +21,7 @@
             <div class="space-x-6 font-bold">
                 <a href="/">Home</a>
                 <a href="/jobs">Jobs</a>
-                <a href="#">Salaries</a>
+                <a href="/applications">Applications</a>
                 <a href="#">Companies</a>
             </div>
 
